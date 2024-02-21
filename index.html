@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Adivinhação</title>
+</head>
+<style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      margin-bottom: 10px;
+    }
+    </style>
+<body>
+    <h1>Jogo de Adivinhação da Carolzin!</h1>
+    <h2>Você irá sortear uma palavras com o tema FRUTAS de 4 a 6 letras, boa sorte!</h2>
+    <p>Palavra sorteada: <span id="palavraSorteada"></span></p>
+    <p>Tentativas restantes: <span id="tentativas"></span></p>
+    <p>Resposta correta: <span id="respostaCorreta"></span></p>
+    <button id="botaoEscolha">Escolher palavra</button>
+    <button id="botaoAdivinhar">Adivinhar</button>
+    <input type="text" id="respostaUsuario" placeholder="Digite sua resposta">
+    <script>
+        const palavras = ['abacate', 'banana', 'cereja', 'damasco', 'figo', 'goiaba', 'laranja', 'limão', 'manga', 'morango'];
+        let palavraSorteada = '';
+        let tentativas = 2;
+        let respostaCorreta = '';
+
+        function sortearPalavra() {
+            const indiceSorteado = Math.floor(Math.random() * palavras.length);
+            palavraSorteada = palavras[indiceSorteado];
+            respostaCorreta = palavraSorteada.charAt(0);
+            document.getElementById('palavraSorteada').textContent = palavraSorteada;
+            document.getElementById('tentativas').textContent = tentativas;
+            document.getElementById('respostaCorreta').textContent = respostaCorreta;
+        }
+
+        function adivinhar() {
+            const respostaUsuario = document.getElementById('respostaUsuario').value;
+            if (respostaUsuario === respostaCorreta) {
+                alert('Parabéns! Você acertou a palavra, vc é o melhor.');
+                sortearPalavra();
+            } else {
+                tentativas--;
+                if (tentativas === 0) {
+                    alert('Que pena! Você não conseguiu adivinhar a palavra, mas quem sabe na próxima dá certo ein! A resposta correta era: ' + respostaCorreta);
+                    sortearPalavra();
+                } else {
+                    alert('Errou! Tente novamente.');
+                }
+            }
+            document.getElementById('tentativas').textContent = tentativas;
+        }
+
+        document.getElementById('botaoEscolha').addEventListener('click', sortearPalavra);
+        document.getElementById('botaoAdivinhar').addEventListener('click', adivinhar);
+    </script>
+</body>
+</html>
